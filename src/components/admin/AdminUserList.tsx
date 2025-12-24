@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Loader2, CheckCircle, XCircle, Search, MapPin, Trash2, ShieldCheck, ShieldOff } from 'lucide-react'
+import { Loader2, CheckCircle, XCircle, Search, MapPin, Trash2, ShieldCheck, ShieldOff, KeyRound } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 
@@ -109,6 +109,25 @@ export function AdminUserList() {
         setProfiles(profiles.filter(p => p.id !== id))
     }
 
+    const resetPassword = async (profile: Profile) => {
+        if (!profile.email) {
+            alert('Este usuário não possui email cadastrado.')
+            return
+        }
+
+        if (!confirm(`Deseja enviar um link de redefinição de senha para ${profile.email}?`)) return
+
+        const { error } = await supabase.auth.resetPasswordForEmail(profile.email, {
+            redirectTo: `${window.location.origin}/login`,
+        })
+
+        if (error) {
+            alert('Erro ao enviar email: ' + error.message)
+        } else {
+            alert(`Email de redefinição de senha enviado para ${profile.email}`)
+        }
+    }
+
     const filteredProfiles = profiles.filter(p =>
         p.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.company_name?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -199,6 +218,17 @@ export function AdminUserList() {
                                         <XCircle className="mr-1 h-4 w-4" /> Pendente
                                     </Button>
                                 )}
+
+                                {/* Reset Password */}
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="text-slate-400 hover:text-amber-600 hover:bg-amber-50"
+                                    onClick={() => resetPassword(profile)}
+                                    title="Resetar Senha"
+                                >
+                                    <KeyRound className="h-4 w-4" />
+                                </Button>
 
                                 {/* Delete */}
                                 <Button

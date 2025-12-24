@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Balloon Body -->
+  <circle cx="50" cy="45" r="40" fill="#DC3C3C" />
+  <path d="M10,45 A40,40 0 0,0 90,45 L90,55 L10,55 Z" fill="#FFFFFF" />
+  <path d="M10,55 A40,40 0 0,0 90,55 L50,85 Z" fill="#003DA5" />
+  
+  <!-- Stripes fix/overlay to make it look striped -->
+  <path d="M10,45 A40,40 0 0,1 90,45" fill="#DC3C3C" /> 
+  <rect x="10" y="45" width="80" height="15" fill="#FFFFFF" clip-path="circle(40px at 50px 45px)" />
+  <path d="M10,60 A40,40 0 0,0 90,60 L50,90 Z" fill="#003DA5" />
+
+  <!-- Simple Basket -->
+  <rect x="42" y="90" width="16" height="10" rx="2" fill="#8B4513" />
+  <line x1="42" y1="90" x2="35" y2="80" stroke="#8B4513" stroke-width="2" />
+  <line x1="58" y1="90" x2="65" y2="80" stroke="#8B4513" stroke-width="2" />
+</svg>

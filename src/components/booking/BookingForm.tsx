@@ -274,7 +274,7 @@ export function BookingForm({ onBookingSuccess }: BookingFormProps) {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="end">Témino</Label>
+                                <Label htmlFor="end">Término</Label>
                                 <Input
                                     id="end"
                                     type="time"

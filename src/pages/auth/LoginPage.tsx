@@ -35,32 +35,8 @@ export default function LoginPage() {
             setError(errorMessage)
             setLoading(false)
         } else {
-            // Check if user is approved
+            // User authenticated successfully - navigate to home
             if (data.session) {
-                const { data: profile, error: profileError } = await supabase
-                    .from('profiles')
-                    .select('is_approved')
-                    .eq('id', data.session.user.id)
-                    .single()
-
-                // If there's an error fetching profile (like 404), treat as approved
-                // This allows users to log in even if profile doesn't exist yet
-                if (profileError) {
-                    console.warn('Profile fetch error:', profileError.message)
-                    // Profile doesn't exist or error - proceed with login
-                    navigate('/')
-                    return
-                }
-
-                // If profile exists and is_approved is explicitly false, block access
-                if (profile && profile.is_approved === false) {
-                    await supabase.auth.signOut()
-                    setError("Seu cadastro aguarda aprovação do administrador.")
-                    setLoading(false)
-                    return
-                }
-
-                // If approved or null (treat null as approved), proceed
                 navigate('/')
             } else {
                 setLoading(false)
